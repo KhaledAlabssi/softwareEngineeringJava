@@ -1,31 +1,46 @@
-var image
+let fgImage = null;
+let bgImage = null;
+let output = null;
+let fgCanvas = document.getElementById('fgCanvas')
+let bgCanvas = document.getElementById("bgCanvas")
 
-function choose() {
-  var fileinput = document.getElementById("finput")
-  var filename = fileinput.value
-  alert("Chose" + filename)
+function loadBgImage() {
+    let file = document.getElementById('bgInput')
+    bgImage = new SimpleImage(file)
+    bgImage.drawTo(bgCanvas)
+
 }
 
-function upload() {
-  var canvas = document.getElementById("can")
-  var fileinput = document.getElementById("finput")
-  image = new SimpleImage(fileinput)
-  image.drawTo(canvas)
+function loadFgImage() {
+    let file = document.getElementById("fgInput")
+    fgImage = new SimpleImage(file)
+    output = new SimpleImage(file)
+
+    fgImage.drawTo(fgCanvas)
+
 }
 
-function makeGray() {
-  for (var pixel of image.values()) {
-    var x = pixel.getX()
-    var y = pixel.getY()
-    var a = pixel.getRed()
-    var b = pixel.getGreen()
-    var c = pixel.getBlue()
-    var avg = (a + b + c) / 3
-    pixel.setRed(avg)
-    pixel.setGreen(avg)
-    pixel.setBlue(avg)
-  }
+function doGreenScreen() {
+    for (let p of output.values()) {
+        let x = p.getX()
+        let y = p.getY()
+        if (p.getGreen() > (p.getRed() + p.getBlue())) {
+            let newPixel = bgImage.getPixel(x, y)
+            output.setPixel(x, y, newPixel)
+        }
+    }
+    clearCanvas()
+    output.drawTo(fgCanvas)
 
-  var canvas = document.getElementById("can")
-  image.drawTo(canvas)
+
+
+
+}
+
+function clearCanvas() {
+    let ctx = fgCanvas.getContext('2d')
+    ctx.clearRect(0, 0, fgCanvas.width, fgCanvas.height)
+    ctx = bgCanvas.getContext("2d")
+    ctx.clearRect(0, 0, bgCanvas.width, bgCanvas.height)
+
 }

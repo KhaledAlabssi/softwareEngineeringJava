@@ -1,22 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
-</head>
-<body id="bod">
-
-    <canvas id ="can">
-  
-</canvas>
-<input type="text" id= "tinput">
-<input type="button" id= "makeg" value="Make Gray" onclick = "makeGray()">
-<input type="file" multiple="false" accept="image/*" id="finput" onchange="upload()">
-    
+  </head>
+  <body>
+    <h1>Greenscreen replacer</h1>
+    <canvas id="fgCanvas"></canvas>
+    <canvas id="bgCanvas"></canvas>
+    <p>
+      Forground image:
+      <input
+        multiple="false"
+        accept="image/*"
+        type="file"
+        id="fgInput"
+      />
+        <button onclick="loadFgImage()">Upload</button>
+    </p>
+    <p>
+      Background image:
+      <input
+        multiple="false"
+        accept="image/*"
+        type="file"
+        id="bgInput"
+        
+      />
+      <button onclick="loadBgImage()">Upload</button>
+    </p>
+    <p><button onclick="doGreenScreen()">Composite</button> <button onclick="clearCanvas()">Clear canvas</button></p>
 
     <script src="./SimpleImage.js"></script>
     <script src="./main.js"></script>
-</body>
+  </body>
 </html>
